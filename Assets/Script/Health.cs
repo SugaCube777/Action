@@ -11,10 +11,15 @@ public class Health : MonoBehaviour
     public float MaxHealth = 100;
     public UnityEvent OnTakeDamage = new UnityEvent();
     Animator animator;
+    float Timer = 0;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+    }
+    private void Update()
+    {
+
     }
 
     public void TakeDamage(float damage)
@@ -22,6 +27,7 @@ public class Health : MonoBehaviour
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
         animator.SetTrigger("TakeDamage");
         //OnTakeDamage.Invoke();
+        
     }
 
 }

@@ -23,22 +23,42 @@ public class Enemy : MonoBehaviour
 
     List<Health> attackedCharacters = new List<Health>();
     Coroutine iAttack;
+    Coroutine iDie;
 
     Animator animator;
     NavMeshAgent navMeshAgent;
+    Health health;
+    float myhealth;
+
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-       
+        health = GetComponent<Health>();
+        myhealth = health.CurrentHealth;
     }
 
     private void Update()
     {
-        FSM();
+
+        if (myhealth > 0)
+        {
+            FSM();
+        }
+        else if (myhealth <=0)
+        { 
+            Death();
+            //iDie = StartCoroutine(IDie());
+            //Destroy(gameObject);
+        }
+        
     }
 
+    public void Death()
+    {
+        animator.SetBool("Death", true);
+    }
 
     void FSM()
     {
@@ -77,6 +97,7 @@ public class Enemy : MonoBehaviour
                     ToChase();
                 }
                 break;
+
         }
         CheckPlayer();
         animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
@@ -85,7 +106,8 @@ public class Enemy : MonoBehaviour
 
     void CheckPlayer()
     {
-        var Scan = Physics.OverlapCapsule(ScanA.position, ScanB.position, 1);
+        if (target != null) return;
+        var Scan = Physics.OverlapCapsule(ScanA.position, ScanB.position, 3);
         foreach (var collider in Scan)
         {
             if (collider.CompareTag("Player"))
@@ -93,7 +115,7 @@ public class Enemy : MonoBehaviour
                 target = collider.transform;
             }
         }
-        if (target = null) return;
+        
 
         
     }
@@ -121,6 +143,7 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
+  
     public void Attack()
     {
         Collider[] Scan = Physics.OverlapSphere(HandPoint.position, 1);
@@ -163,6 +186,19 @@ public class Enemy : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
-    public enum State { idle, patrol, chase, attack };
+    /*
+    IEnumerator IDie()
+    {
+        while (true)
+        {
+            health.Death();
+        
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
+        }
+
+    }
+    */
+    public enum State { idle, patrol, chase, attack, die };
 
 }
