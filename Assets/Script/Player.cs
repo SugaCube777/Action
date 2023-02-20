@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //Player
+    public float AttackDamage = 10;
+
+    public Transform HandPoint;
+
+    Animator animator;
+
     void Start()
     {
-        
-    }
 
-    // Update is called once per frame
+    }
     void Update()
     {
-        
+
     }
+
+    public void Attack()
+    {
+        Collider[] scan = Physics.OverlapSphere(HandPoint.position, 1);
+        foreach (Collider collider in scan)
+        {
+            Health health = collider.GetComponent<Health>();
+            if (health != null && collider.CompareTag("Enemy"))
+            {
+                health.TakeDamage(AttackDamage);
+            }
+        }
+    }
+
 }
