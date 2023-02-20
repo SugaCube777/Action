@@ -13,11 +13,24 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
     void Update()
     {
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            animator.SetTrigger("Punch");
+        }
 
+        if (Input.GetKeyDown(KeyCode.W)|| Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.S)|| Input.GetKeyDown(KeyCode.D))
+        {
+            animator.SetTrigger("IsWalking");
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+        {
+            animator.ResetTrigger("IsWalking");
+        }
     }
 
     public void Attack()

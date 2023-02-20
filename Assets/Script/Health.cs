@@ -20,7 +20,8 @@ public class Health : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        OnTakeDamage.Invoke();
+        animator.SetTrigger("TakeDamage");
+        //OnTakeDamage.Invoke();
     }
 
 }

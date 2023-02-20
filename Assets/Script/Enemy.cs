@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+       
     }
 
     private void Update()
@@ -84,8 +85,6 @@ public class Enemy : MonoBehaviour
 
     void CheckPlayer()
     {
-        if (target != null) return;
-
         var Scan = Physics.OverlapCapsule(ScanA.position, ScanB.position, 1);
         foreach (var collider in Scan)
         {
@@ -94,6 +93,9 @@ public class Enemy : MonoBehaviour
                 target = collider.transform;
             }
         }
+        if (target = null) return;
+
+        
     }
 
     void ToIdle()
@@ -121,8 +123,8 @@ public class Enemy : MonoBehaviour
 
     public void Attack()
     {
-        Collider[] scan = Physics.OverlapSphere(HandPoint.position, 1);
-        foreach (Collider collider in scan)
+        Collider[] Scan = Physics.OverlapSphere(HandPoint.position, 1);
+        foreach (Collider collider in Scan)
         {
             Health health = collider.GetComponent<Health>();
             if (health != null && collider.CompareTag("Player"))
