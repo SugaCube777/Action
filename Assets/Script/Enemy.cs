@@ -41,7 +41,9 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        FSM();
 
+        /*
         if (myhealth > 0)
         {
             FSM();
@@ -49,9 +51,10 @@ public class Enemy : MonoBehaviour
         else if (myhealth <=0)
         { 
             Death();
-            //iDie = StartCoroutine(IDie());
-            //Destroy(gameObject);
+            iDie = StartCoroutine(IDie());
+            Destroy(gameObject);
         }
+        */
         
     }
 
@@ -143,6 +146,13 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
+    public void ToDie()
+    {
+        CurrentState = State.die;
+        animator.SetBool("Death", true);
+        StartCoroutine(IDie());
+    }
+
   
     public void Attack()
     {
@@ -186,19 +196,13 @@ public class Enemy : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
-    /*
+    
     IEnumerator IDie()
     {
-        while (true)
-        {
-            health.Death();
-        
         yield return new WaitForSeconds(5);
         Destroy(gameObject);
-        }
-
     }
-    */
+    
     public enum State { idle, patrol, chase, attack, die };
 
 }

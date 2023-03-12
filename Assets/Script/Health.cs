@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     public float CurrentHealth = 100;
     public float MaxHealth = 100;
     public UnityEvent OnTakeDamage = new UnityEvent();
+    public UnityEvent OnDie = new UnityEvent();
     Animator animator;
     float Timer = 0;
 
@@ -26,8 +27,15 @@ public class Health : MonoBehaviour
     {
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
         animator.SetTrigger("TakeDamage");
-        //OnTakeDamage.Invoke();
-        
+        OnTakeDamage.Invoke();
+        if (CurrentHealth == 0)
+            OnDie.Invoke();
+    }
+
+    [ContextMenu("Test Die")]
+    void TestDie()
+    {
+        TakeDamage(MaxHealth);
     }
 
 }

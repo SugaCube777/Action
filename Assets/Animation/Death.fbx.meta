@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: Die
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
       lastFrame: 109
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: 0.83
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
